@@ -1,0 +1,26 @@
+{
+  "name": "api_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HongQuan0110/API_Node_WebReview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HongQuan0110/API_Node_WebReview/issues"
+  },
+  "homepage": "https://github.com/HongQuan0110/API_Node_WebReview#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1"
+  }
+}
