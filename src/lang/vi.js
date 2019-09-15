@@ -1,0 +1,21 @@
+const transValidation = {
+    EMAIL_INCORRECT: "Email phải có dạng example@email.com",
+    PASSWORD_INCORRECT: "Mật khẩu phải có ít nhất 6 ký tự",
+    PASSWORD_CONFIRMATION_INCORRECT: "Mật khẩu không khớp",
+}
+
+const transError = {
+    EMAIL_ALREADY: "Email đã được sử dụng, vui lòng dùng email khác"
+}
+
+const transSuccess = {
+    USER_CREATED: (email) => {
+        return `Tài khoản ${email} đã được tạo thành công`
+    }
+}
+
+module.exports = {
+    transValidation,
+    transError,
+    transSuccess
+}
