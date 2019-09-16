@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     username: {type: String},
+    age: {type: Number},
     gender: {type: String},
     phone: {type: String},
     avatar: {type: String},
@@ -27,7 +29,17 @@ UserSchema.statics = {
     findUserByEmail(email){
         return this.findOne({
             "local.email": email
-        }, {"local.password": 0})
+        }, {_id: 1, "local.password": 1})
+    },
+
+    findUserById(id){
+        return this.findById(id, {"local.password": 0});
+    }
+}
+
+UserSchema.methods = {
+    comparePassword(passwordHash) {
+        return bcrypt.compareSync(passwordHash, this.local.password)
     }
 }
 

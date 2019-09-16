@@ -8,7 +8,7 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 import UserModel from "../models/user.model";
 
-const register =  (email, password) => {
+const register =  (email, password, age) => {
     return new Promise(async (resolve, reject) => {
         try {
     
@@ -17,9 +17,10 @@ const register =  (email, password) => {
             if (userByEmail) {
                 return reject(transError.EMAIL_ALREADY);
             }
-    
+            
             let user = {
                 username: email.split("@")[0],
+                age,
                 local: {
                     email,
                     password: bcrypt.hashSync(password, salt),
