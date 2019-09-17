@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     age: {type: Number},
     gender: {type: String},
     phone: {type: String},
-    avatar: {type: String},
+    avatar: {type: String, default: "none"},
     local: {
         email: {type: String},
         password: {type: String},
@@ -30,6 +30,12 @@ UserSchema.statics = {
         return this.findOne({
             "local.email": email
         }, {_id: 1, "local.password": 1})
+    },
+
+    findUserComment(id){
+        return this.findOne({
+            "local.email": email
+        }, {_id: 1, username: 1, avatar: 1})
     },
 
     findUserById(id){

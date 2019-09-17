@@ -2,7 +2,7 @@ import session from "express-session";
 
 let config = (app) => {
     app.use(session({
-        secret: 'token',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: { secure: true }
