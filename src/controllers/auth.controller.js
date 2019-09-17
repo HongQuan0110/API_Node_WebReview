@@ -1,6 +1,8 @@
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
+import dotenv from "dotenv";
+dotenv.config();
 
 import { userService } from "../services/index.service";
 import { transError } from "../lang/vi";
@@ -37,7 +39,7 @@ module.exports.login = (req, res, next) => {
         
         req.login(user, async (error) => {
             if (error) return next(error)
-            const token = jwt.sign({user}, "token");
+            const token = jwt.sign({user}, process.env.SESSION_SECRET);
             return res.json(token);
         })
     })(req, res, next)

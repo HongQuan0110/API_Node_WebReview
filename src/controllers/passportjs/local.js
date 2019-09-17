@@ -1,6 +1,8 @@
 import passport from "passport";
 import passportJwt from "passport-jwt";
 import passportLocal from "passport-local";
+import dotenv from "dotenv";
+dotenv.config();
 
 import UserModel from "../../models/user.model";
 import { transError } from "../../lang/vi";
@@ -36,13 +38,13 @@ let initPassportLocal = () => {
     });
 
     passport.deserializeUser(function (id, done) {
-        UserModel.findUserById(id)
-        .then(user => {
-            return done(null, user);
-        })
-        .catch(err => {
-            return done(err, null);
-        })
+        // UserModel.findUserById(id)
+        // .then(user => {
+        //     return done(null, user);
+        // })
+        // .catch(err => {
+        //     return done(err, null);
+        // })
     });
 }
 
@@ -50,9 +52,10 @@ const JwtStrategy = passportJwt.Strategy;
 const ExtractJwt = passportJwt.ExtractJwt;
 
 let initPassportJwt = () => {
+    console.log(process.env.SESSION_SECRET)
     passport.use(new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: "token"
+        secretOrKey: process.env.SESSION_SECRET
     }, (jwtPayload, done) => {
         return UserModel.findUserById(jwtPayload.user._id)
             .then(user => {
