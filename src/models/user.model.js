@@ -33,9 +33,7 @@ UserSchema.statics = {
     },
 
     findUserComment(id){
-        return this.findOne({
-            "local.email": email
-        }, {_id: 1, username: 1, avatar: 1})
+        return this.findById(id, {_id: 1, username: 1, avatar: 1})
     },
 
     findUserById(id){

@@ -14,6 +14,8 @@ const app = express();
 // connect database
 connectDB();
 
+app.use(express.static('public'));
+
 // parse application/x-www-form-urlencoded and application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

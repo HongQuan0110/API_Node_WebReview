@@ -29,11 +29,11 @@ module.exports.createNewProduct = async (req, res, next) => {
 
 module.exports.getProduct = async (req, res, next) => {
     try {
-        const productId = req.body.id;
+        const productId = req.params.id;
         const data = await productService.getProduct(productId);
         return res.status(200).send(data);
     } catch (error) {
-        return res.status(500).send(error);
+        return res.status(500).send({error});
     }
 }
 

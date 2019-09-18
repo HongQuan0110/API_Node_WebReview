@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 
 import { productController } from "../controllers/index.controller";
 
@@ -6,8 +7,19 @@ const route = express.Router();
 
 route.post('/', productController.createNewProduct);
 
-route.get('/:id', productController.getProduct);
-
 route.post('/testUpload', productController.testUploadImage);
+
+route.get('/testGetImage', (req, res, next) => {
+    let readStream = fs.createReadStream('src/public/images/product/1.jpg', {
+        highWaterMark: 10 * 1024
+    });
+    readStream.pipe(res);
+    
+    readStream.on('data', function(e){
+        console.log(e.length)
+    })
+})
+
+route.get('/:id', productController.getProduct);
 
 module.exports = route;
