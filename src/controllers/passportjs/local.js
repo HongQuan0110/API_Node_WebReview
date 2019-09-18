@@ -26,7 +26,7 @@ let initPassportLocal = () => {
             if (!checkPassword) {
                 return done(null, false, { message: transError.LOGIN_FAILED });
             }
-
+            
             return done(null, await UserModel.findUserById(user._id))
         } catch (error) {
             return done(error, false);

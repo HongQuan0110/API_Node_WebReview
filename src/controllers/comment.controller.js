@@ -3,12 +3,11 @@ import { commentService } from "../services/index.service";
 module.exports.createNewComment = async (req, res, next) => {
     try {
         const comment = {
-            productId: comment.productId,
+            productId: req.body.productId,
             userId: req.user._id,
-            score: comment.score,
-            content: comment.content
+            score: req.body.score,
+            content: req.body.content
         }
-
         await commentService.createNewComment(comment);
         return res.status(201).send();
     } catch (error) {
