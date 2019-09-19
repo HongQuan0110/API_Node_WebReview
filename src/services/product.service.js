@@ -9,7 +9,7 @@ import UserModel from "../models/user.model";
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null,  `${__dirname}/../${app.productImage_directory}`);
+        cb(null,  `${app.productImage_directory}`);
     },
     filename: function(req, file, cb){
         cb(null, `${Date.now()}-${file.originalname}`);
@@ -44,17 +44,20 @@ const getProduct = (productId) => {
             
             let product = await ProductModel.findProductById(productId);
             let productDetail = await ProductDetailModel.findProductDetail(productId);
-            let comment = await commentModel.findCommentByProductId(productId);
-            let user = null;
-            if (comment){
-                user = await UserModel.findUserComment(comment.userId);
+            let comments = await commentModel.findCommentByProductId(productId);
+            let users = null;
+            if (comments.length > 0){
+                users = await Promise.all(comments.map(comment => {
+                    return UserModel.findUserComment(comment.userId);
+                }))
+                
             }
             
             return reslove({
                 product,
                 productDetail,
-                comment,
-                user
+                comments,
+                users
             })
         } catch (error) {
             reject(error.message)
