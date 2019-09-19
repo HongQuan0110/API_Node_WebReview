@@ -14,7 +14,7 @@ const app = express();
 // connect database
 connectDB();
 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
 // parse application/x-www-form-urlencoded and application/json
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +35,8 @@ app.use(passport.session());
 // });
 
 app.get("/", (req, res) => {
-    res.send("Hello word");
+    console.log(req.get("host"))
+    res.send(req.get("host"))
 })
 
 routes(app);

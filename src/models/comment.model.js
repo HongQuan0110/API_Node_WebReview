@@ -17,7 +17,7 @@ const CommentSchema = new Schema({
 
 CommentSchema.statics = {
     findCommentByProductId(productId){
-        return this.findOne({productId}, {
+        return this.find({productId}, {
             userId: 1, score: 1, like: 1, dislike: 1, content: 1, createdAt: 1
         }).exec();
     },
