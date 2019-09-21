@@ -8,7 +8,7 @@ const ProductSchema = new Schema({
     label: {type: String},
     price: {type: Number},
     score: {type: Number},
-    createdAt: {type: Date, default: Date.now()},
+    createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date},
     deletedAt: {type: Date},
     isDelete: {type: Boolean, default: false}

@@ -46,7 +46,7 @@ const ProductDetailSchema = new Schema({
         type: {type: String},
         capacity: {type: String},
     },
-    createdAt: {type: Date, default: Date.now()},
+    createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date},
     deletedAt: {type: Date},
     isDelete: {type: Boolean, default: false}
