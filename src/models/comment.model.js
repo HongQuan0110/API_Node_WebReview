@@ -9,6 +9,7 @@ const CommentSchema = new Schema({
     like: {type: Number},
     dislike: {type: Number},
     content: {type: String},
+    analysis: {type: String},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date},
     deletedAt: {type: Date},
@@ -18,7 +19,7 @@ const CommentSchema = new Schema({
 CommentSchema.statics = {
     findCommentByProductId(productId){
         return this.find({productId}, {
-            userId: 1, score: 1, like: 1, dislike: 1, content: 1, createdAt: 1
+            userId: 1, score: 1, like: 1, dislike: 1, content: 1, analysis: 1,  createdAt: 1
         }).sort({createdAt: -1}).exec();
     },
 
