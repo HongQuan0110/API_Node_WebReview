@@ -27,10 +27,10 @@ module.exports.createNewProduct = async (req, res, next) => {
     }
 }
 
-module.exports.getProduct = async (req, res, next) => {
+module.exports.getProductById = async (req, res, next) => {
     try {
         const productId = req.params.id;
-        const data = await productService.getProduct(productId);
+        const data = await productService.getProductById(productId);
         return res.status(200).send(data);
     } catch (error) {
         return res.status(500).send({error});
@@ -42,6 +42,26 @@ module.exports.testUploadImage = (req, res, next) => {
         productService.testUploadImage(req, res);
     } catch (error) {
         console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+module.exports.getProducts = async (req, res, next) => {
+    try {
+        let products = await productService.getProducts();
+        return res.status(200).send(products);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+module.exports.updateProductById = async (req, res, next) => {
+    try {
+        let productId = req.params.id;
+        let product = req.body;
+        await productService.updateProductById(productId, product);
+        return res.status(200).send({message: "Update success"});
+    } catch (error) {
         return res.status(500).send(error);
     }
 }

@@ -21,6 +21,14 @@ ProductSchema.statics = {
 
     findProductById(id){
         return this.findById(id).exec();
+    },
+
+    findProducts(limit){
+        return this.find().sort({createdAt: -1}).limit(limit);
+    },
+
+    updateProductById(id, product){
+        return this.findByIdAndUpdate(id, product).exec();
     }
 }
 

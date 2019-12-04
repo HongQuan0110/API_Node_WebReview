@@ -59,6 +59,10 @@ ProductDetailSchema.statics = {
     
     findProductDetail(productId){
         return this.findOne({productId}).exec();
+    },
+
+    updateProductDetailByProductId(productId, productDetail){
+        return this.findOneAndUpdate({productId}, productDetail).exec();
     }
 }
 
