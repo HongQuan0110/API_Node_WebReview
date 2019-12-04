@@ -7,6 +7,8 @@ import ProductDetailModel from "../models/productDetail.model";
 import commentModel from "../models/comment.model";
 import UserModel from "../models/user.model";
 
+const LIMIT_PRODUCTS = 12;
+
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null,  `${app.productImage_directory}`);
@@ -38,7 +40,7 @@ const createNewProduct = (product, productDetail) => {
     })
 }
 
-const getProduct = (productId) => {
+const getProductById = (productId) => {
     return new Promise(async (reslove, reject) => {
         try {
             
@@ -75,8 +77,33 @@ const testUploadImage = (req, res) => {
     })
 }
 
+const getProducts = () => {
+    return new Promise(async (reslove, reject) => {
+        try {
+            let products = await ProductModel.findProducts(LIMIT_PRODUCTS);
+            return reslove(products);
+        } catch (error) {
+            reject(error.message)
+        }
+    })
+}
+
+const updateProductById = (id, updateProduct) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await ProductModel.updateProductById(id, updateProduct);
+            await ProductDetailModel.updateProductDetailByProductId(id, updateProduct);
+            return resolve();
+        } catch (error) {
+            reject(error.message);
+        }
+    })
+}
+
 module.exports = {
     createNewProduct,
-    getProduct,
-    testUploadImage
+    getProductById,
+    testUploadImage,
+    getProducts,
+    updateProductById
 }

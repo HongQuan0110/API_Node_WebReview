@@ -20,6 +20,10 @@ route.get('/testGetImage', (req, res, next) => {
     })
 })
 
-route.get('/:id', productController.getProduct);
+route.get('/', productController.getProducts)
+
+route.get('/:id', productController.getProductById);
+
+route.put('/:id', productController.updateProductById);
 
 module.exports = route;
