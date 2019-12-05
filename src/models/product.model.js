@@ -23,12 +23,30 @@ ProductSchema.statics = {
         return this.findById(id).exec();
     },
 
-    findProducts(limit){
-        return this.find().sort({createdAt: -1}).limit(limit);
+    findProducts(params, limit){
+        if (params.label){
+            return this.find({
+                $and: [
+                    {isDelete: false},
+                    {name: {$regex: new RegExp(params.name, "i")}},
+                    {label: params.label}
+                ]
+            }).sort({createdAt: params.sort ? params.sort : -1}).limit(limit);
+        }
+        return this.find({
+            $and: [
+                {isDelete: false},
+                {name: {$regex: new RegExp(params.name, "i")}},
+            ]
+        }).sort({createdAt: params.sort ? params.sort : -1}).limit(limit);
     },
 
     updateProductById(id, product){
         return this.findByIdAndUpdate(id, product).exec();
+    },
+
+    deleteProductById(id){
+        return this.findByIdAndUpdate(id, {isDelete: true}).exec();
     }
 }
 

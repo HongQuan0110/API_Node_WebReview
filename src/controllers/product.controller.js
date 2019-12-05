@@ -39,7 +39,7 @@ module.exports.getProductById = async (req, res, next) => {
 
 module.exports.testUploadImage = (req, res, next) => {
     try {
-        productService.testUploadImage(req, res);
+        return productService.testUploadImage(req, res);
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
@@ -48,7 +48,8 @@ module.exports.testUploadImage = (req, res, next) => {
 
 module.exports.getProducts = async (req, res, next) => {
     try {
-        let products = await productService.getProducts();
+        let params = req.query;
+        let products = await productService.getProducts(params);
         return res.status(200).send(products);
     } catch (error) {
         return res.status(500).send(error);
@@ -63,5 +64,15 @@ module.exports.updateProductById = async (req, res, next) => {
         return res.status(200).send({message: "Update success"});
     } catch (error) {
         return res.status(500).send(error);
+    }
+}
+
+module.exports.deleteProductById = async (req, res, next) => {
+    try {
+        let productId = req.params.id;
+        await productService.deleteProductById(productId);
+        return res.status(200).send({message: "Delete success"});
+    } catch (error) {
+        return res.status(500).send(error)
     }
 }
