@@ -77,10 +77,10 @@ const testUploadImage = (req, res) => {
     })
 }
 
-const getProducts = () => {
+const getProducts = (params) => {
     return new Promise(async (reslove, reject) => {
         try {
-            let products = await ProductModel.findProducts(LIMIT_PRODUCTS);
+            let products = await ProductModel.findProducts(params, LIMIT_PRODUCTS);
             return reslove(products);
         } catch (error) {
             reject(error.message)
@@ -100,10 +100,22 @@ const updateProductById = (id, updateProduct) => {
     })
 }
 
+const deleteProductById = (productId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await ProductModel.deleteProductById(productId);
+            return resolve();
+        } catch (error) {
+            reject(error.message);
+        }
+    })
+}
+
 module.exports = {
     createNewProduct,
     getProductById,
     testUploadImage,
     getProducts,
-    updateProductById
+    updateProductById,
+    deleteProductById
 }
