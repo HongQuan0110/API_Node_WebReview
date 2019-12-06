@@ -31,14 +31,14 @@ ProductSchema.statics = {
                     {name: {$regex: new RegExp(params.name, "i")}},
                     {label: params.label}
                 ]
-            }).sort({createdAt: params.sort ? params.sort : -1}).limit(limit);
+            }).sort({createdAt: params.sort ? params.sort : -1}).skip(+params.skip).limit(limit);
         }
         return this.find({
             $and: [
                 {isDelete: false},
                 {name: {$regex: new RegExp(params.name, "i")}},
             ]
-        }).sort({createdAt: params.sort ? params.sort : -1}).limit(limit);
+        }).sort({createdAt: params.sort ? params.sort : -1}).skip(+params.skip).limit(limit);
     },
 
     updateProductById(id, product){
@@ -47,6 +47,24 @@ ProductSchema.statics = {
 
     deleteProductById(id){
         return this.findByIdAndUpdate(id, {isDelete: true}).exec();
+    },
+
+    countProducts(params){
+        if (params.label) {
+            return this.count({
+                $and: [
+                    {isDelete: false},
+                    {name: {$regex: new RegExp(params.name, "i")}},
+                    {label: params.label}
+                ]
+            }).exec();
+        }
+        return this.count({
+            $and: [
+                {isDelete: false},
+                {name: {$regex: new RegExp(params.name, "i")}},
+            ]
+        }).exec();
     }
 }
 

@@ -7,7 +7,7 @@ import ProductDetailModel from "../models/productDetail.model";
 import commentModel from "../models/comment.model";
 import UserModel from "../models/user.model";
 
-const LIMIT_PRODUCTS = 12;
+const LIMIT_PRODUCTS = 8;
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -80,8 +80,9 @@ const testUploadImage = (req, res) => {
 const getProducts = (params) => {
     return new Promise(async (reslove, reject) => {
         try {
+            let productNumber = await ProductModel.countProducts(params);
             let products = await ProductModel.findProducts(params, LIMIT_PRODUCTS);
-            return reslove(products);
+            return reslove({products, productNumber});
         } catch (error) {
             reject(error.message)
         }
