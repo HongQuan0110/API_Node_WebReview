@@ -6,11 +6,23 @@ const createNewComment = (comment) => {
             await CommentModel.createNewComment(comment);
             resolve(true)
         } catch (error) {
-            reject(error);
+            reject(error.message);
+        }
+    })
+}
+
+const getCommentByProductId = (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            let comments = CommentModel.findCommentByProductId(id);
+            return resolve(comments);
+        } catch (error) {
+            reject(error.message);
         }
     })
 }
 
 module.exports = {
-    createNewComment
+    createNewComment,
+    getCommentByProductId
 }
