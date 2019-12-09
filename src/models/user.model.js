@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     gender: {type: String},
     phone: {type: String},
     avatar: {type: String},
+    role: {type: Number, default: 2},
     local: {
         email: {type: String},
         password: {type: String},
