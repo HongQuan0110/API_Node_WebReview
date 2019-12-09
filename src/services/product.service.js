@@ -82,7 +82,14 @@ const getProducts = (params) => {
         try {
             let productNumber = await ProductModel.countProducts(params);
             let products = await ProductModel.findProducts(params, LIMIT_PRODUCTS);
-            return reslove({products, productNumber});
+            // let comments = await Promise.all(products.map( product => {
+            //     return  commentModel.findCommentByProductId(product._id);
+            // }))
+            let productByComment; 
+            if (params.homepage){
+                productByComment = await ProductModel.findProductsByCommentAmount(LIMIT_PRODUCTS);
+            }
+            return reslove({products, productNumber, productByComment});
         } catch (error) {
             reject(error.message)
         }

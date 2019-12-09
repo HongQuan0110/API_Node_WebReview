@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 
-import { authController } from "../controllers/index.controller";
+import { authController, userController } from "../controllers/index.controller";
 import { auth } from "../validations/index.validation";
 import { initPassportLocal, initPassportJwt } from "../controllers/passportjs/local";
 import { transError } from "../lang/vi";
@@ -27,5 +27,10 @@ route.get('/profile', (req, res, next) => {
     })(req, res, next)
 });
 
+route.put('/profile', passport.authenticate('jwt', {session: false}), userController.updateProfile);
+
+route.post('/avatar', passport.authenticate('jwt', {session: false}), userController.updateAvatarUserById);
+
+route.put('/password', passport.authenticate('jwt', {session: false}), userController.updatePasswordUser);
 
 module.exports = route;
