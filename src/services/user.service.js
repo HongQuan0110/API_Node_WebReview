@@ -28,7 +28,7 @@ const upload = multer({storage, fileFilter}).single("avatar");
 
 import UserModel from "../models/user.model";
 
-const register =  (email, password, age) => {
+const register =  (email, password, age, gender) => {
     return new Promise(async (resolve, reject) => {
         try {
     
@@ -41,6 +41,7 @@ const register =  (email, password, age) => {
             let user = {
                 username: email.split("@")[0],
                 age,
+                gender,
                 local: {
                     email,
                     password: bcrypt.hashSync(password, salt),

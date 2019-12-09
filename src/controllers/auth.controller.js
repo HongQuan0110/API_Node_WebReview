@@ -12,17 +12,20 @@ module.exports.register = async (req, res, next) => {
     if (!result.isEmpty()){
         let errorResult = Object.values(result.mapped());
         let arrError = errorResult.map(val => val.msg);
+        console.log(arrError)
         return res.status(400).send({error: arrError});
     }
 
     try {
-        let userMsg = await userService.register(req.body.email, req.body.password, req.body.age);
+        let userMsg = await userService.register(req.body.email, req.body.password, req.body.age, req.body.gender);
         return res.status(201).send({
-            msg: userMsg
+            msg: userMsg,
+            result: true
         });
     } catch (error) {
-        return res.status(400).send({
-            msg: error
+        return res.status(200).send({
+            msg: error,
+            result: false
         });        
     }
 }
