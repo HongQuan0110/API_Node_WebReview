@@ -8,6 +8,7 @@ const ProductSchema = new Schema({
     label: {type: String},
     price: {type: Number},
     score: {type: Number},
+    commentAmount: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date},
     deletedAt: {type: Date},
@@ -65,7 +66,28 @@ ProductSchema.statics = {
                 {name: {$regex: new RegExp(params.name, "i")}},
             ]
         }).exec();
+    },
+
+    increaseComment(productId, commentAmount){
+        console.log(commentAmount)
+        return this.findByIdAndUpdate(productId, {
+            commentAmount
+        })
+    },
+
+    findProductsByCommentAmount(limit){
+        return this.find({
+            isDelete: false,
+        }).sort({commentAmount: -1, createdAt: -1}).limit(limit).exec()
     }
 }
+
+// ProductSchema.methods = {
+//     increaseComment(productId){
+//         let currentComment = this.commentAmount + 1;
+//         console.log(currentComment)
+//         return ProductSchema.statics.increaseComment(productId, currentComment)
+//     }
+// }
 
 module.exports = mongoose.model("product", ProductSchema);

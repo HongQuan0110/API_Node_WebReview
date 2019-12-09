@@ -38,6 +38,26 @@ UserSchema.statics = {
 
     findUserById(id){
         return this.findById(id, {"local.password": 0});
+    },
+
+    findUserByIdToChangePass(id){
+        return this.findById(id, {"local.password": 1});
+    },
+
+    updateProfileById(id, profile){
+        return this.findByIdAndUpdate(id, {
+            username: profile.username,
+            age: profile.age,
+            gender: profile.gender,
+            phone: profile.phone,
+            avatar: profile.avatar
+        }).exec();
+    },
+
+    updatePasswordById(id, password){
+        return this.findByIdAndUpdate(id, {
+            "local.password": password
+        }).exec();
     }
 }
 
