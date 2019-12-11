@@ -31,7 +31,6 @@ import UserModel from "../models/user.model";
 const register =  (email, password, age, gender) => {
     return new Promise(async (resolve, reject) => {
         try {
-    
             let userByEmail = await UserModel.findUserByEmail(email);
     
             if (userByEmail) {
