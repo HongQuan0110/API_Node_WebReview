@@ -37,8 +37,13 @@ module.exports.login = (req, res, next) => {
         }
 
         if (!user) {
+            if (info.message === transError.BLOCK_ACCOUNT){
+                return res.send({msg: transError.BLOCK_ACCOUNT});
+            }
             return res.send({msg: transError.LOGIN_FAILED});
         }
+
+        
         
         req.login(user, async (error) => {
             if (error) return next(error)

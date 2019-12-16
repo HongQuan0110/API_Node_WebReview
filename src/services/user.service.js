@@ -7,6 +7,7 @@ import {app} from "../configs/app";
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
+const LIMIT_USERS = 5;
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -96,9 +97,35 @@ const updatePasswordUser = (id, params) => {
     })
 }
 
+const getAllUser = (currentId, params) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            let userNumber = await UserModel.countUser(currentId, params);
+            let userList = await UserModel.getAllUser(currentId, params, LIMIT_USERS);
+            return resolve({userList, userNumber})
+        } catch (error) {
+            console.log(error.message)
+            return reject(error.message);
+        }
+    })
+}
+
+const updateUserById = (id, isDelete) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            await UserModel.updateUserById(id, isDelete);
+            return resolve();
+        } catch (error) {
+            return reject()
+        }
+    })
+}
+
 module.exports = {
     register,
     updateProfileById,
     updateAvatarUserById,
-    updatePasswordUser
+    updatePasswordUser,
+    getAllUser,
+    updateUserById
 }

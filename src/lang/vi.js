@@ -9,7 +9,8 @@ const transError = {
     EMAIL_ALREADY: "Email đã được sử dụng, vui lòng dùng email khác",
     LOGIN_FAILED: "Sai email hoặc mật khẩu, vui lòng đăng nhập lại",
     IMAGE_UPLOAD_FAILED: "Chỉ được upload file ảnh",
-    UNAUTHORIZED: "Token không hợp lệ"
+    UNAUTHORIZED: "Token không hợp lệ",
+    BLOCK_ACCOUNT: "Tài này khoản đã bị khóa"
 }
 
 const transSuccess = {
