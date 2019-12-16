@@ -27,3 +27,25 @@ module.exports.updatePasswordUser = async (req, res, next) => {
         return res.status(200).send({message: error, result: false});
     }
 }
+
+module.exports.getAllUser = async (req, res, next) => {
+    try {
+        let params = req.query;
+        let currentId = req.user.id;
+        let userResult = await userService.getAllUser(currentId, params);
+        return res.status(200).send(userResult)
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+module.exports.updateUserById = async (req, res, next) => {
+    try {
+        let id = req.params.id;
+        let isDelete = req.body.isDelete;
+        await userService.updateUserById(id, isDelete);
+        return res.status(200).send({message: "Update success"});
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}

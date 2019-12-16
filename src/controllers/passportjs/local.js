@@ -17,9 +17,13 @@ let initPassportLocal = () => {
     }, async (req, email, password, done) => {
         try {
             let user = await UserModel.findUserByEmail(email);
-
+            
             if (!user) {
                 return done(null, false, { message: transError.LOGIN_FAILED });
+            }
+
+            if (user.isDelete === true){
+                return done(null, false, { message: transError.BLOCK_ACCOUNT });
             }
 
             let checkPassword = user.comparePassword(password);

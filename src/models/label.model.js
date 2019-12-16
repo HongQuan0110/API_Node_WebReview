@@ -11,13 +11,13 @@ const LabelSchema = new Schema({
 });
 
 LabelSchema.statics = {
-    getLabels(params, limit){
+    getLabels(params){
         return this.find({
             $and: [
                 {isDelete: false},
                 {name: {$regex: new RegExp(params.name, "i")}}
             ]
-        }).sort({createdAt: params.sort ? params.sort : -1}).skip(+params.skip).limit(limit);
+        }).sort({createdAt: params.sort ? params.sort : -1}).skip(+params.skip).limit(+params.limit);
     },
 
     createNewLabel(label){
