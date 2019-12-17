@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     gender: { type: String },
     phone: { type: String },
     avatar: { type: String },
-    role: { type: Number, default: 2 },
+    role: {type: Schema.Types.ObjectId, ref: 'Role'},
     local: {
         email: { type: String },
         password: { type: String },
@@ -121,6 +121,10 @@ UserSchema.statics = {
         return this.findByIdAndUpdate(id, {
             isDelete
         }).exec();
+    },
+
+    findUserByIdAndRole(id){
+        return this.findById(id).populate('role')
     }
 }
 

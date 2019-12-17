@@ -22,7 +22,8 @@ route.get('/profile', (req, res, next) => {
         }
         return res.status(200).send({
             msg: transError.UNAUTHORIZED,
-            result: false
+            result: false,
+            role: {index: 0}
         });
     })(req, res, next)
 });

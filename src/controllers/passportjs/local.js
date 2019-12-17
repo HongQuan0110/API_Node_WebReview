@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import UserModel from "../../models/user.model";
+import RoleModel from "../../models/role.model";
 import { transError } from "../../lang/vi";
 
 const LocalStrategy = passportLocal.Strategy;
@@ -61,16 +62,26 @@ let initPassportJwt = () => {
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.SESSION_SECRET
     }, (jwtPayload, done) => {
-        return UserModel.findUserById(jwtPayload.user._id)
-            .then(user => {
-                if (user) {
-                    return done(null, user)
-                }
-                return done(null, false);
-            })
-            .catch(err => {
-                return done(err, false)
-            })
+        return UserModel.findUserByIdAndRole(jwtPayload.user._id)
+                .then(user => {
+                    if (user){
+                        return done(null, user);
+                    }
+                    return done(null, false);
+                })
+                .catch(err => {
+                    return done(err, done);
+                })
+        // return UserModel.findUserById(jwtPayload.user._id)
+        //     .then(user => {
+        //         if (user) {
+        //             return done(null, user)
+        //         }
+        //         return done(null, false);
+        //     })
+        //     .catch(err => {
+        //         return done(err, false)
+        //     })
     }))
 }
 

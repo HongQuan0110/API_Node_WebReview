@@ -28,6 +28,7 @@ function fileFilter(req, file, cb) {
 const upload = multer({storage, fileFilter}).single("avatar");
 
 import UserModel from "../models/user.model";
+import RoleModel from "../models/role.model";
 
 const register =  (email, password, age, gender) => {
     return new Promise(async (resolve, reject) => {
@@ -38,6 +39,8 @@ const register =  (email, password, age, gender) => {
                 return reject(transError.EMAIL_ALREADY);
             }
             
+            let role = await RoleModel.getRoleByName("user");
+
             let user = {
                 username: email.split("@")[0],
                 age,
@@ -47,7 +50,8 @@ const register =  (email, password, age, gender) => {
                     password: bcrypt.hashSync(password, salt),
                     isActive: true,
                     verifyToken: uuidv4()
-                }
+                },
+                role: role[0]._id
             }
     
             UserModel.createNew(user);

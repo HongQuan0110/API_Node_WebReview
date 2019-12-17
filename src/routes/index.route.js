@@ -6,6 +6,7 @@ import productRoute from "./product.route";
 import commentRoute from "./comment.route";
 import labelRoute from "./label.route";
 import userRoute from "./user.route";
+import roleRoute from "./role.route"
 
 const routes = (app) => {
     app.use(cors());
@@ -13,7 +14,8 @@ const routes = (app) => {
     app.use('/product', productRoute);
     app.use('/comment', commentRoute);
     app.use('/label', labelRoute);
-    app.use('/user',passport.authenticate('jwt', {session: false}), userRoute);
+    app.use('/user', passport.authenticate('jwt', {session: false}), userRoute);
+    app.use('/role', roleRoute);
 }
 
 module.exports = routes;
