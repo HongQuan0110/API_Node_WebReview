@@ -124,7 +124,7 @@ UserSchema.statics = {
     },
 
     findUserByIdAndRole(id){
-        return this.findById(id).populate('role')
+        return this.findById(id, {"local.password": 0}).populate('role')
     }
 }
 

@@ -1,6 +1,8 @@
 import CommentModel from "../models/comment.model";
 import ProductModel from "../models/product.model";
 
+const LIMIT_COMMENTS = 5;
+
 const createNewComment = (comment) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -15,11 +17,12 @@ const createNewComment = (comment) => {
     })
 }
 
-const getCommentByProductId = (id) => {
-    return new Promise((resolve, reject) => {
+const getCommentByProductId = (id, params) => {
+    return new Promise(async(resolve, reject) => {
         try {
-            let comments = CommentModel.findCommentByProductId(id);
-            return resolve(comments);
+            let comments = await CommentModel.findCommentByProductId(id, params, LIMIT_COMMENTS);
+            let commentsNumber = await CommentModel.countCommentByProductId(id, params);
+            return resolve({comments, commentsNumber});
         } catch (error) {
             reject(error.message);
         }
