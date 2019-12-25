@@ -18,7 +18,8 @@ module.exports.createNewComment = async (req, res, next) => {
 
 module.exports.getCommentByProductId = async (req, res, next) => {
     try {
-        let comments = await commentService.getCommentByProductId(req.params.productId);
+        let params = req.query;
+        let comments = await commentService.getCommentByProductId(req.params.productId, params);
         return res.status(200).send(comments);
     } catch (error) {
         return res.status(500).send(error);
