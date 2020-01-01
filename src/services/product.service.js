@@ -46,7 +46,7 @@ const getProductById = (productId) => {
             
             let product = await ProductModel.findProductById(productId);
             let productDetail = await ProductDetailModel.findProductDetail(productId);
-            // let comments = await commentModel.findCommentByProductId(productId);
+            let comments = await commentModel.findCommentByProductId(productId, {});
             // let users = null;
             // if (comments.length > 0){
             //     users = await Promise.all(comments.map(comment => {
@@ -58,7 +58,7 @@ const getProductById = (productId) => {
             return reslove({
                 product,
                 productDetail,
-                // comments,
+                comments,
                 // users
             })
         } catch (error) {
